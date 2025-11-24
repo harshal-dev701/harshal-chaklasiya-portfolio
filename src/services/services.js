@@ -111,3 +111,28 @@ export async function getEducationDetails(preview = true) {
 }
 
 
+export async function getTechExperienceDetails(preview = true) {
+  const techExperienceData = await fetchGraphQL(
+    `query {
+    techExperienceCollection{
+      items{
+        companyName
+        companyLogo{
+        url
+        }
+        companyLocation
+        workMode
+        order
+      journeyTime  
+      myRole
+      roleSummery
+      learnSkills
+    }
+  }
+}`,
+    preview
+  );
+  return techExperienceData?.data?.techExperienceCollection?.items;
+}
+
+

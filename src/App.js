@@ -10,7 +10,7 @@ import Skills from "./sections/Skills";
 import Loader from "./components/Loader";
 
 import ParticlesBackground from "./components/ParticlesBackground";
-import { getDetailsAboutMe, getEducationDetails, getHeroSectionDetails, getMySkills } from "./services/services";
+import { getDetailsAboutMe, getEducationDetails, getHeroSectionDetails, getMySkills, getTechExperienceDetails } from "./services/services";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -21,6 +21,7 @@ const App = () => {
   const [education, setEducation] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [techExperience, setTechExperience] = useState([]);
 
   const TOTAL_API_CALLS = 4;
   const PROGRESS_INCREMENT = 100 / TOTAL_API_CALLS;
@@ -78,6 +79,18 @@ const App = () => {
     }
   }
 
+  const getTechExperienceDetailsData = async () => {
+    try {
+      const techExperienceData = await getTechExperienceDetails(true);
+      const sortedTechExperience = techExperienceData?.sort((a, b) => (a?.order || 0) - (b?.order || 0)).reverse();
+      setTechExperience(sortedTechExperience || []);
+    } catch (err) {
+      console.error("Error fetching tech experience details:", err);
+    } finally {
+      updateProgress();
+    }
+  }
+
   useEffect(() => {
     const fetchAllData = async () => {
       setIsLoading(true);
@@ -88,7 +101,8 @@ const App = () => {
           getHeroSectionData(),
           getAllSkillsData(),
           getDetailsAboutMeData(),
-          getEducationDetailsData()
+          getEducationDetailsData(),
+          getTechExperienceDetailsData()
         ]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -127,7 +141,7 @@ const App = () => {
             <About heroSectionDetails={heroSectionDetails} aboutMe={aboutMe} />
             <Education education={education} />
             <Skills skills={skills} />
-            <Experience />
+            <Experience techExperience={techExperience} image={heroSectionDetails?.heroImage?.url}/>
             <Projects />
             <Contact />
           </main>

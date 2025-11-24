@@ -2,9 +2,9 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { FiBriefcase, FiMapPin } from "react-icons/fi";
 import SectionHeading from "../components/SectionHeading";
-import { experiences, personal } from "../data/content";
+import { personal } from "../data/content";
 
-const Experience = () => {
+const Experience = ({ techExperience, image }) => {
   const timelineRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -33,46 +33,47 @@ const Experience = () => {
 
         <div ref={timelineRef} className="relative">
           <div className="space-y-12">
-            {experiences.map((item) => (
+            {techExperience?.map((item, index) => (
               <motion.article
-                key={`${item.company}-${item.duration}`}
+                key={`${index}`}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="grid grid-cols-1 gap-6 py-12 first:pt-0 last:pb-0 md:grid-cols-[2fr_1fr_4fr]"
-              >
+                className="grid grid-cols-1 gap-6 py-12 first:pt-0 last:pb-0 md:grid-cols-[2fr_1fr_4fr]">
                 <div className="w-full lg:max-w-sm">
                   <div className="flex flex-col items-start gap-y-3 text-sm font-light">
                     <time className="text-xs font-semibold uppercase tracking-[0.45em] text-slate-400">
-                      {item.duration}
+                      {item?.journeyTime}
                     </time>
                     <div className="flex items-center gap-3">
-                      {item.logoImage ? (
+                      {item?.companyLogo?.url ? (
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 p-1.5 shadow-lg backdrop-blur-sm">
                           <img
-                            src={item.logoImage}
-                            alt={`${item.company} logo`}
+                            src={item.companyLogo?.url}
+                            alt={`${item.companyName} logo`}
                             className="h-full w-full object-contain"
                           />
                         </div>
                       ) : null}
                       <h2 className="font-serif text-2xl font-semibold tracking-tight text-white md:text-3xl">
-                        {item.company}
+                        {item.companyName}
                       </h2>
                     </div>
                     <div className="flex flex-col gap-2 text-slate-400">
-                      {item.location && (
+                      {item.companyLocation && (
                         <div className="flex items-center gap-1.5">
                           <FiMapPin className="h-3.5 w-3.5 flex-shrink-0" />
-                          <span className="text-sm">{item.location}</span>
+                          <span className="text-sm">
+                            {item.companyLocation}
+                          </span>
                         </div>
                       )}
-                      {item.workMode && (
+                      {item?.workMode && (
                         <div className="flex items-center gap-1.5">
                           <FiBriefcase className="h-3.5 w-3.5 flex-shrink-0" />
                           <span className="text-sm font-semibold text-slate-300">
-                            {item.workMode}
+                            {item?.workMode}
                           </span>
                         </div>
                       )}
@@ -86,26 +87,23 @@ const Experience = () => {
                   <div className="flex flex-col gap-6 text-sm leading-relaxed text-slate-300">
                     <header>
                       <h3 className="text-xl font-semibold text-white md:text-2xl">
-                        {item.role}
+                        {item?.myRole}
                       </h3>
                     </header>
                     <section aria-label="Key achievements">
                       <ul className="flex list-none flex-col gap-4 text-slate-300/90">
-                        {item.achievements.map((achievement) => (
-                          <li key={achievement} className="leading-relaxed">
-                            {achievement}
-                          </li>
-                        ))}
+                        <li className="leading-relaxed">
+                          {item?.roleSummery}
+                        </li>
                       </ul>
                     </section>
-                    {item.skills?.length ? (
+                    {item?.learnSkills?.length ? (
                       <section aria-label="Technologies used">
                         <div className="flex flex-wrap gap-2">
-                          {item.skills.map((skill) => (
+                          {item?.learnSkills.map((skill) => (
                             <span
                               key={skill}
-                              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-gradient-to-r from-slate-800/70 via-slate-900/60 to-transparent px-3 py-1 font-mono text-xs uppercase tracking-[0.35em] text-slate-200 shadow-sm"
-                            >
+                              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-gradient-to-r from-slate-800/70 via-slate-900/60 to-transparent px-3 py-1 font-mono text-xs uppercase tracking-[0.35em] text-slate-200 shadow-sm">
                               {skill}
                             </span>
                           ))}
@@ -127,11 +125,10 @@ const Experience = () => {
               />
               <motion.div
                 className="absolute left-1/2 hidden -translate-x-1/2 md:flex"
-                style={{ top: indicatorOffset }}
-              >
+                style={{ top: indicatorOffset }}>
                 <div className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white/40 bg-slate-900 shadow-lg shadow-indigo-900/30">
                   <img
-                    src={personal.photo}
+                    src={image}
                     alt="Timeline avatar"
                     className="h-full w-full object-cover"
                   />
