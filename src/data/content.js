@@ -8,23 +8,22 @@ import skillzapImage from "../assets/skillzap.svg";
 import skillzapLogo from "../assets/skillzap-logo.png";
 import slashstarLogo from "../assets/slashstar.png";
 import madviseLogo from "../assets/madvise.png";
-import resumePdf from "../assets/dhruv_resume.pdf";
 
 export const personal = {
-  name: "Dhruv Sheladiya",
-  role: "Frontend Developer — React.js Specialist",
-  photo: myImg,
-  redImg: RedImg,
+  name: "Harshal Chaklasiya",
+  role: "Full Stack Developer — React.js & Next.js",
+  photo: "",
+  redImg: "",
   summary:
-    "I am a passionate frontend developer specializing in React.js, crafting snappy interfaces, immersive user journeys, and animation-rich experiences with modern tooling.",
+    "I am a passionate full stack developer specializing in React.js & Next.js, crafting snappy interfaces, immersive user journeys, and animation-rich experiences with modern tooling.",
   highlights: [
-    { label: "Age", value: "21" },
+    { label: "Age", value: "24" },
     { label: "Country", value: "India" },
-    { label: "Experience", value: "1.5+ Years" },
+    { label: "Experience", value: "2.5+ Years" },
   ],
   contact: {
-    email: "dhruvsheladiya07@gmail.com",
-    phone: "+91 95103 34996",
+    email: "harshal.dev701@gmail.com",
+    phone: "+91 8347867477",
     location: "Remote & On-site",
   },
 };
@@ -32,9 +31,9 @@ export const personal = {
 export const heroCtas = [
   {
     label: "Download CV",
-    href: resumePdf,
+    // href: resumePdf,
     variant: "primary",
-    download: "Dhruv_Sheladiya_Resume.pdf",
+    download: "Harshal_Chaklasiya_Resume.pdf",
   },
   {
     label: "Contact Me",
@@ -151,8 +150,8 @@ export const projects = [
 ];
 
 export const socials = [
-  { label: "GitHub", href: "https://github.com/Dhruv-1511", handle: "@Dhruv-1511" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/dhruv-sheladiya-a350582a6", handle: "@dhruv" },
+  { label: "GitHub", href: "https://github.com/Harshal-1511", handle: "@Harshal-1511" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/Harshal-Chaklasiya-a350582a6", handle: "@Harshal" },
   { label: "Whatsapp", href: "https://wa.me/919510334996", handle: "+91 95103 34996" },
-  { label: "Instagram", href: "https://www.instagram.com/dhruv_15_11_/", handle: "@dhruv_15_11_" },
+  { label: "Instagram", href: "https://www.instagram.com/Harshal_15_11_/", handle: "@Harshal_15_11_" },
 ];

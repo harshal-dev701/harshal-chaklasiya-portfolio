@@ -208,7 +208,7 @@ const Navbar = () => {
                 className="text-base font-bold text-white transition-colors group-hover:bg-gradient-to-r group-hover:from-brand-300 group-hover:via-indigo-300 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent"
                 whileHover={{ x: 2 }}
               >
-                Dhruv Sheladiya
+                Harshal Chaklasiya
               </motion.span>
             </div>
           </motion.a>

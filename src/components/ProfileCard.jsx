@@ -89,8 +89,7 @@ const ProfileCard = ({
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950">
               <span className="text-4xl font-semibold text-white">
-                {name
-                  .split(" ")
+                {name?.split(" ")
                   .map((word) => word[0])
                   .join("")}
               </span>

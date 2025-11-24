@@ -13,7 +13,7 @@ import {
 import SectionHeading from "../components/SectionHeading";
 import { personal } from "../data/content";
 
-const InteractivePhoto = () => {
+const InteractivePhoto = ({ imageUrl }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -52,8 +52,7 @@ const InteractivePhoto = () => {
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-      }}
-    >
+      }}>
       <div className="relative overflow-hidden rounded-3xl border-2 border-white/10 bg-gradient-to-br from-slate-900/90 to-slate-950/90 p-4 shadow-2xl">
         {/* Photo Container */}
         <motion.div
@@ -61,11 +60,10 @@ const InteractivePhoto = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
           <motion.img
-            src={personal.redImg}
-            alt={`${personal.name} portrait`}
+            src={imageUrl || ""}
+            alt={`image`}
             className="h-full w-full object-cover"
             animate={{ scale: [1, 1.05, 1] }}
             transition={{
@@ -113,13 +111,12 @@ const StoryCard = ({ title, content, icon: Icon, index, gradient }) => {
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-6 backdrop-blur-sm"
+      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-6 backdrop-blur-sm cursor-pointer"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      whileHover={{ y: -6, scale: 1.02 }}
-    >
+      whileHover={{ y: -6, scale: 1.02 }}>
       {/* Animated Gradient Background */}
       <motion.div
         className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-20"
@@ -132,8 +129,7 @@ const StoryCard = ({ title, content, icon: Icon, index, gradient }) => {
           <motion.div
             className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5"
             whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
             <Icon className="text-xl text-brand-300" />
           </motion.div>
           <h4 className="text-lg font-bold text-white">{title}</h4>
@@ -150,7 +146,7 @@ const StoryCard = ({ title, content, icon: Icon, index, gradient }) => {
   );
 };
 
-const About = () => {
+const About = ({ heroSectionDetails }) => {
   const storyCards = [
     {
       title: "My Journey",
@@ -210,7 +206,7 @@ const About = () => {
           {/* Left Column - Photo & Quick Facts */}
           <div className="space-y-8">
             {/* Interactive Photo */}
-            <InteractivePhoto />
+            <InteractivePhoto imageUrl={heroSectionDetails?.heroImage2?.url || ""} />
 
             {/* Quick Facts - Horizontal Layout */}
             {/* <motion.div
@@ -256,8 +252,7 @@ const About = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+          transition={{ duration: 0.6, delay: 0.4 }}>
           <div className="mb-6 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
               <FiCoffee className="text-brand-300" />
@@ -268,8 +263,7 @@ const About = () => {
             <motion.a
               href={`mailto:${personal.contact.email}`}
               className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all hover:border-brand-500/40 hover:bg-brand-500/10"
-              whileHover={{ y: -2, scale: 1.02 }}
-            >
+              whileHover={{ y: -2, scale: 1.02 }}>
               <div className="mb-3 flex items-center gap-2">
                 <FiMail className="text-brand-300" />
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
@@ -283,8 +277,7 @@ const About = () => {
             <motion.a
               href={`tel:${personal.contact.phone}`}
               className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all hover:border-brand-500/40 hover:bg-brand-500/10"
-              whileHover={{ y: -2, scale: 1.02 }}
-            >
+              whileHover={{ y: -2, scale: 1.02 }}>
               <div className="mb-3 flex items-center gap-2">
                 <FiPhone className="text-brand-300" />
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
@@ -297,8 +290,7 @@ const About = () => {
             </motion.a>
             <motion.div
               className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all hover:border-brand-500/40 hover:bg-brand-500/10"
-              whileHover={{ y: -2, scale: 1.02 }}
-            >
+              whileHover={{ y: -2, scale: 1.02 }}>
               <div className="mb-3 flex items-center gap-2">
                 <FiMapPin className="text-brand-300" />
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">

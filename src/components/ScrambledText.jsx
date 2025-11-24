@@ -10,23 +10,23 @@ const ScrambledText = ({
   startDelay = 0,
   className,
 }) => {
-  const [display, setDisplay] = useState(() => text.replace(/\S/g, " "));
+  const [display, setDisplay] = useState(() => text?.replace(/\S/g, " "));
   const frameRef = useRef();
   const timeoutRef = useRef();
 
   useEffect(() => {
-    const letters = text.split("");
-    const totalFrames = Math.max(Math.floor(duration / 40), letters.length);
+    const letters = text?.split("");
+    const totalFrames = Math.max(Math.floor(duration / 40), letters?.length);
     let frame = 0;
 
     const update = () => {
       const progress = frame / totalFrames;
-      const revealCount = Math.floor(progress * letters.length);
+      const revealCount = Math.floor(progress * letters?.length);
       const next = letters
         .map((char, index) => {
           if (char === " ") return " ";
           if (index < revealCount) return char;
-          const randomIndex = Math.floor(Math.random() * CHARACTERS.length);
+          const randomIndex = Math.floor(Math.random() * CHARACTERS?.length);
           return CHARACTERS[randomIndex];
         })
         .join("");

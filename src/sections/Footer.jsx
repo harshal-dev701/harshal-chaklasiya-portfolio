@@ -10,8 +10,8 @@ const links = [
 ];
 
 const socialIcons = [
-  { label: "GitHub", href: "https://github.com/Dhruv-1511", Icon: FiGithub },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/dhruv-sheladiya-a350582a6", Icon: FiLinkedin },
+  { label: "GitHub", href: "https://github.com/Harshal-1511", Icon: FiGithub },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/Harshal-Chaklasiya-a350582a6", Icon: FiLinkedin },
   { label: "Whatsapp", href: "https://wa.me/919510334996", Icon: FaWhatsapp },
 ];
 
@@ -26,7 +26,7 @@ const Footer = () => (
     <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 text-center md:flex-row md:items-center md:justify-between">
       <div className="space-y-3">
         <p className="text-xs uppercase tracking-[0.45em] text-slate-400">
-          Dhruv Sheladiya
+          Harshal Chaklasiya
         </p>
         <p className="text-sm text-slate-400">
           © {new Date().getFullYear()} Crafted with React, Tailwind CSS & Framer

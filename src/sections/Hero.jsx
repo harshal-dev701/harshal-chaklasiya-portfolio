@@ -7,6 +7,8 @@ import ParallaxShapes from "../components/ParallaxShapes";
 import ProfileCard from "../components/ProfileCard";
 import ScrambledText from "../components/ScrambledText";
 import { heroCtas, personal } from "../data/content";
+import { getHeroSectionDetails } from "../services/services";
+import { useEffect, useState } from "react";
 
 const floatingIcons = [
   { icon: <FaReact />, color: "text-cyan-400", delay: 0 },
@@ -17,9 +19,7 @@ const floatingIcons = [
   { icon: <FaGithub />, color: "text-slate-100", delay: 0.9 },
 ];
 
-const Hero = () => {
-  const greeting = `Hi, I'm ${personal.name}`;
-
+const Hero = ({ heroSectionDetails }) => {
   const handleContactClick = () => {
     const contactSection = document.getElementById("contact");
     if (contactSection) {
@@ -30,22 +30,22 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-16"
-    >
+      className="relative flex min-h-screen items-center overflow-hidden ">
       <ParallaxShapes />
 
       <div className="absolute inset-0 -z-10 bg-grid-pattern bg-[length:48px_48px] opacity-10" />
 
-      <div className="mx-auto grid w-full max-w-7xl gap-12 px-6 py-24 md:grid-cols-[1.1fr,0.9fr] md:py-32">
+      <div className="mx-auto grid w-full max-w-7xl gap-12 px-6 py-4 md:grid-cols-[1.1fr,0.9fr] md:py-8">
         <div className="relative flex flex-col gap-10">
-          <motion.span
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-500/40 bg-brand-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.45em] text-brand-300"
-          >
-            Frontend Developer
-          </motion.span>
+          {heroSectionDetails?.position && (
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-500/40 bg-brand-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.45em] text-brand-300">
+              {heroSectionDetails?.position || ""}
+            </motion.span>
+          )}
 
           <div className="space-y-6">
             <motion.h1
@@ -56,40 +56,42 @@ const Hero = () => {
                 delay: 0.4,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="relative text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl"
-            >
+              className="relative text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
               <ScrambledText
-                text={greeting}
+                text={heroSectionDetails?.heroTitle || ""}
                 duration={2000}
                 className="whitespace-pre-wrap"
               />
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7 }}
-              className="max-w-xl text-base text-slate-300 sm:text-lg"
-            >
-              {personal.summary}
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.85 }}
-              className="text-lg font-medium text-brand-200 md:text-xl"
-            >
-              {personal.role}
-            </motion.p>
+            {heroSectionDetails?.heroDescription && (
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.7 }}
+                className="max-w-xl text-base text-slate-300 sm:text-lg">
+                {heroSectionDetails?.heroDescription || ""}
+              </motion.p>
+            )}
+            {heroSectionDetails?.techSpecialist &&
+              heroSectionDetails?.position && (
+                <motion.p
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.85 }}
+                  className="text-lg font-medium text-brand-200 md:text-xl">
+                  {heroSectionDetails?.position || ""} -{" "}
+                  {heroSectionDetails?.techSpecialist || ""}
+                </motion.p>
+              )}
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.05 }}
-            className="flex flex-wrap items-center gap-4"
-          >
-            {heroCtas.map((cta) => (
+            className="flex flex-wrap items-center gap-4">
+            {heroCtas?.map((cta) => (
               <PrimaryButton key={cta.label} {...cta} />
             ))}
           </motion.div>
@@ -98,22 +100,37 @@ const Hero = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.25 }}
-            className="flex flex-wrap gap-6"
-          >
-            {personal.highlights.map((highlight) => (
-              <motion.div
-                key={highlight.label}
-                className="glass-card rounded-2xl px-6 py-5 shadow-lg shadow-indigo-900/20"
-                whileHover={{ y: -6 }}
-              >
-                <p className="text-sm uppercase tracking-[0.45em] text-slate-400">
-                  {highlight.label}
-                </p>
-                <p className="mt-2 text-2xl font-semibold text-white">
-                  {highlight.value}
-                </p>
-              </motion.div>
-            ))}
+            className="flex flex-wrap gap-6">
+            <motion.div
+              className="glass-card rounded-2xl px-6 py-5 shadow-lg shadow-indigo-900/20"
+              whileHover={{ y: -6 }}>
+              <p className="text-sm uppercase tracking-[0.45em] text-slate-400">
+                Age
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-white">
+                {heroSectionDetails?.age || ""}
+              </p>
+            </motion.div>
+            <motion.div
+              className="glass-card rounded-2xl px-6 py-5 shadow-lg shadow-indigo-900/20"
+              whileHover={{ y: -6 }}>
+              <p className="text-sm uppercase tracking-[0.45em] text-slate-400">
+                Country
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-white">
+                {heroSectionDetails?.country || ""}
+              </p>
+            </motion.div>
+            <motion.div
+              className="glass-card rounded-2xl px-6 py-5 shadow-lg shadow-indigo-900/20"
+              whileHover={{ y: -6 }}>
+              <p className="text-sm uppercase tracking-[0.45em] text-slate-400">
+                Experience
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-white">
+                {heroSectionDetails?.experience || ""}
+              </p>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -122,15 +139,14 @@ const Hero = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative"
-        >
+          className="relative">
           <ProfileCard
-            name={personal.name}
-            title={personal.role}
-            handle="DhruvSheladiya"
+            name={heroSectionDetails?.name || ""}
+            title={heroSectionDetails?.position || ""}
+            handle={heroSectionDetails?.name?.split(" ").join("") || ""}
             status="Online"
             contactText="Contact Me"
-            avatarUrl={personal.photo}
+            avatarUrl={heroSectionDetails?.heroImage?.url || ""}
             showUserInfo={true}
             enableTilt={true}
             enableMobileTilt={false}
@@ -154,8 +170,7 @@ const Hero = () => {
                   duration: 5 + index,
                   repeat: Infinity,
                   ease: "easeInOut",
-                }}
-              >
+                }}>
                 {item.icon}
               </motion.div>
             ))}
