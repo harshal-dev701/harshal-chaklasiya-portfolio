@@ -136,7 +136,7 @@ const App = () => {
         >
           <ParticlesBackground />
           <Navbar />
-          <main className="flex flex-col gap-24 pt-24">
+          <main className="flex flex-col gap-14 pt-24">
             <Hero heroSectionDetails={heroSectionDetails} />
             <About heroSectionDetails={heroSectionDetails} aboutMe={aboutMe} />
             <Education education={education} />

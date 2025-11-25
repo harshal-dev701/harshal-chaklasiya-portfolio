@@ -8,6 +8,10 @@ import {
   useTransform,
 } from "framer-motion";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
+import logo2 from "../assets/logo2.png";
+import logo3 from "../assets/logo2.png";
+
+
 
 const navLinks = [
   { id: "home", label: "Home" },
@@ -189,9 +193,9 @@ const Navbar = () => {
 
                 {/* Logo Image */}
                 <img
-                  src="/logo192.png"
+                  src={logo2}
                   alt="Logo"
-                  className="relative z-10 h-9 w-9 object-contain drop-shadow-lg"
+                  className="relative z-10 h-12 w-12 object-contain drop-shadow-lg"
                 />
               </motion.span>
             </motion.div>
