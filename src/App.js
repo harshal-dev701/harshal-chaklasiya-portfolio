@@ -82,7 +82,7 @@ const App = () => {
   const getTechExperienceDetailsData = async () => {
     try {
       const techExperienceData = await getTechExperienceDetails(true);
-      const sortedTechExperience = techExperienceData?.sort((a, b) => (a?.order || 0) - (b?.order || 0)).reverse();
+      const sortedTechExperience = techExperienceData?.sort((a, b) => (a?.order || 0) - (b?.order || 0));
       setTechExperience(sortedTechExperience || []);
     } catch (err) {
       console.error("Error fetching tech experience details:", err);
