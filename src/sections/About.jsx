@@ -111,7 +111,7 @@ const StoryCard = ({ title, content, icon: Icon, index, gradient }) => {
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-6 backdrop-blur-sm cursor-pointer"
+      className="group relative w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-6 backdrop-blur-sm cursor-pointer h-full"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -202,14 +202,14 @@ const About = ({ heroSectionDetails, aboutMe }) => {
         />
 
         {/* Main Content - Split Layout */}
-        <div className="mt-12 grid gap-12 lg:grid-cols-[1.2fr,1fr]">
+        <div className="mt-12 grid gap-12 ">
           {/* Left Column - Photo & Quick Facts */}
-          <div className="space-y-8">
-            {/* Interactive Photo */}
-            <InteractivePhoto imageUrl={heroSectionDetails?.heroImage2?.url || ""} />
+          {/* <div className="space-y-8"> */}
+          {/* Interactive Photo */}
+          {/* <InteractivePhoto imageUrl={heroSectionDetails?.heroImage2?.url || ""} /> */}
 
-            {/* Quick Facts - Horizontal Layout */}
-            {/* <motion.div
+          {/* Quick Facts - Horizontal Layout */}
+          {/* <motion.div
               className="grid grid-cols-3 gap-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -236,10 +236,10 @@ const About = ({ heroSectionDetails, aboutMe }) => {
                 </motion.div>
               ))}
             </motion.div> */}
-          </div>
+          {/* </div> */}
 
           {/* Right Column - Story Cards */}
-          <div className="space-y-4">
+          <div className="flex w-full gap-3 ">
             {storyCards.map((card, index) => (
               <StoryCard key={card.title} {...card} index={index} />
             ))}

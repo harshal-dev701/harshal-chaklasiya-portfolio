@@ -347,7 +347,6 @@ const Projects = () => {
   async function getAllProjectsData() {
     try {
       const projectsData = await getAllProjects(true);
-      console.log("projectsData", projectsData);
       setProjects(projectsData);
     } catch (err) {
       console.error("Error fetching blog details:", err);

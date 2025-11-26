@@ -11,6 +11,7 @@ import {
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import SectionHeading from "../components/SectionHeading";
 import { personal, socials } from "../data/content";
+import sendContactEmail from "../lib/email/sendContactEmail";
 
 const iconMap = {
   GitHub: FiGithub,
@@ -27,18 +28,41 @@ const Contact = () => {
     email: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: "", email: "", message: "" });
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:5000/send-mail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        // await sendContactEmail({ name: formData.name, email: formData.email, message: formData.message });
+        setTimeout(() => {
+          setSubmitted("Thanks! Your message has been captured.");
+          setFormData({ name: "", email: "", message: "" });
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setSubmitted("Failed to send message. Please try again later.");
+          setFormData({ name: "", email: "", message: "" });
+        }, 1000);
+      }
+    } catch (error) {
+      console.error("Error sending contact email:", error);
+    } finally {
+      setSubmitted("")
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,8 +81,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="glass-card rounded-3xl p-8 shadow-2xl"
-          >
+            className="glass-card rounded-3xl p-8 shadow-2xl">
             <div className="grid gap-6 md:grid-cols-2">
               <label className="flex flex-col gap-2">
                 <span className="text-xs uppercase tracking-[0.35em] text-slate-400">
@@ -105,19 +128,18 @@ const Contact = () => {
             </label>
             <motion.button
               type="submit"
+              disabled={loading}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="mt-8 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-500 via-indigo-500 to-sky-400 px-8 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-white shadow-lg shadow-indigo-900/40"
-            >
-              Send Message
+              className="mt-8 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r  from-brand-500 via-indigo-500 to-sky-400 px-8 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-white shadow-lg shadow-indigo-900/40">
+              {loading ? "Sending..." : "Send Message"}
             </motion.button>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: submitted ? 1 : 0, y: submitted ? 0 : 20 }}
-              className="mt-4 text-sm text-brand-300"
-            >
-              Thanks! Your message has been captured.
+              className={`mt-4 text-sm ${submitted ? "text-brand-300" : "text-red-500"}`}>
+              {submitted}
             </motion.div>
           </motion.form>
 
@@ -126,8 +148,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 p-8"
-          >
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 p-8">
             <motion.div
               className="absolute inset-0 -z-10 bg-gradient-to-br from-brand-500/20 via-black/0 to-sky-400/10"
               animate={{ opacity: [0.35, 0.6, 0.35] }}
@@ -178,8 +199,7 @@ const Contact = () => {
                         target="_blank"
                         rel="noreferrer"
                         whileHover={{ scale: 1.05, y: -2 }}
-                        className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-sm font-medium text-white transition hover:border-brand-500/40 hover:text-brand-300"
-                      >
+                        className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-sm font-medium text-white transition hover:border-brand-500/40 hover:text-brand-300">
                         <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-lg text-brand-300 transition group-hover:border-brand-500/40 group-hover:text-brand-200">
                           <Icon />
                         </span>

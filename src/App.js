@@ -37,7 +37,6 @@ const App = () => {
     try {
       const heroSectionDetails = await getHeroSectionDetails(true);
       setHeroSectionDetails(heroSectionDetails);
-      console.log("heroSectionDetails", heroSectionDetails);
     } catch (error) {
       console.error("Error fetching hero section details:", error);
     } finally {
